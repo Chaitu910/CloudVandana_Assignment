@@ -1,0 +1,74 @@
+import java.util.*;
+
+public class Task1Programming {
+
+	public static void main(String[] args) {
+		 // Create an array and shuffle it.
+        int[] array = {1, 2, 3, 4, 5, 6, 7};
+        shuffleArray(array);
+        System.out.println("Shuffled array: " + Arrays.toString(array));
+
+        // 2. Enter a Roman Number as input and convert it to an integer.
+        System.out.println("Enter a Roman number: ");
+        Scanner scanner = new Scanner(System.in);
+        String romanNumber = scanner.nextLine();
+        int integerValue = romanToInt(romanNumber);
+        System.out.println("Integer value: " + integerValue);
+
+        // 3. Check if the input is pangram or not.
+        System.out.println("Enter a sentence: ");
+        String sentence = scanner.nextLine();
+        boolean isPangram = isPangram(sentence);
+        System.out.println("Is the sentence a pangram? " + isPangram);
+    }
+
+    private static void shuffleArray(int[] array) {
+    	for (int i = 0; i < array.length; i++) {
+            int randomIndex = (int) (Math.random() * (array.length - i) + i);
+            int temp = array[i];
+            array[i] = array[randomIndex];
+            array[randomIndex] = temp;
+        }
+    }
+
+    private static int romanToInt(String romanNumber) {
+        int integerValue = 0;
+        int previousValue = 0;
+        for (char character : romanNumber.toCharArray()) {
+            int currentValue = romanNumeralMap.get(character);
+            if (currentValue > previousValue) {
+                integerValue -= previousValue;
+            }
+            integerValue += currentValue;
+            previousValue = currentValue;
+        }
+
+        return integerValue;
+    }
+
+    private static final Map<Character, Integer> romanNumeralMap = new HashMap<>();
+
+    static {
+        romanNumeralMap.put('I', 1);
+        romanNumeralMap.put('V', 5);
+        romanNumeralMap.put('X', 10);
+        romanNumeralMap.put('L', 50);
+        romanNumeralMap.put('C', 100);
+        romanNumeralMap.put('D', 500);
+        romanNumeralMap.put('M', 1000);
+    }
+
+    private static boolean isPangram(String sentence) {
+        Set<Character> alphabetSet = new HashSet<>();
+        for (char character : sentence.toCharArray()) {
+            if (Character.isAlphabetic(character)) {
+                alphabetSet.add(Character.toLowerCase(character));
+            }
+        }
+
+        return alphabetSet.size() == 26;
+
+
+	}
+
+}
